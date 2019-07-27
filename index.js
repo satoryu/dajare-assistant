@@ -29,7 +29,6 @@ app.intent('Default Fallback Intent', async (conv) => {
     const puns = await fetch(conv.input.raw)
 
     conv.ask(`<speak>${puns[0]}</speak>`)
-    conv.ask(`<speak>${conv.input.raw}</speak>`)
 })
 
 express().use(bodyParser.json(), app).listen(process.env.PORT || 3000)
