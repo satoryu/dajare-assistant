@@ -29,7 +29,7 @@ app.intent('Default Welcome Intent', (conv) => {
 app.intent('Default Fallback Intent', async (conv) => {
     const puns = await fetch(conv.input.raw)
 
-    conv.ask(`<speak>${_.samplele(puns)}</speak>`)
+    conv.ask(`<speak>${_.sample(puns)}</speak>`)
 })
 
 express().use(bodyParser.json(), app).listen(process.env.PORT || 3000)
