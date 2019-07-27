@@ -13,7 +13,7 @@ const fetch = async function(text) {
         }
     }
     try {
-        const response = await request.post(functions.config().dajare_api.url, options);
+        const response = await request.post(process.env.DAJARE_API_URL, options);
 
         return response['puns'];
     } catch(err) {
