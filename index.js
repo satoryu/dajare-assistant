@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const {dialogflow} = require('actions-on-google')
+const {dialogflow, Suggestions} = require('actions-on-google')
 const request = require('request-promise-native')
 const _ = require('underscore')
 
@@ -28,8 +28,11 @@ app.intent('Default Welcome Intent', (conv) => {
 
 app.intent('Default Fallback Intent', async (conv) => {
     const puns = await fetch(conv.input.raw)
+    const pun = _.sample(puns)
+    conv.data.dajare = pun
 
-    conv.ask(`<speak>${_.sample(puns)}</speak>`)
+    conv.ask(`<speak>${pun}</speak>`)
+    conv.ask(new Suggestions('おもろい', 'おもろくない'))
 })
 
 express().use(bodyParser.json(), app).listen(process.env.PORT || 3000)
