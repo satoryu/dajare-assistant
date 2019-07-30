@@ -30,6 +30,11 @@ app.intent('Default Fallback Intent', async (conv) => {
     const puns = await fetch(conv.input.raw)
     const pun = _.sample(puns)
 
+    const context = conv.contexts.get('plus_one')
+    if (context) {
+        console.log(context.parameters)
+    }
+
     conv.contexts.set('plus_one', 1, { pun: pun });
 
     conv.ask(`<speak>${pun}</speak>`)
