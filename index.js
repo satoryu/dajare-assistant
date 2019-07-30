@@ -26,24 +26,26 @@ app.intent('Default Welcome Intent', (conv) => {
     conv.ask(`<speak>こんにちわ、駄洒落ボットです。何か喋ってください。</speak>`)
 });
 
+app.intent('Fun', (conv) => {
+    conv.ask(`<speak>${conv.input.raw}</speak>`)
+    conv.ask(`<speak>せやろ</speak>`)
+})
+
 app.intent('Default Fallback Intent', async (conv) => {
     const puns = await fetch(conv.input.raw)
     const pun = _.sample(puns)
 
     const context = conv.contexts.get('plus_one')
     if (context) {
+        console.log('-----------------')
         console.log(context.parameters)
+        console.log('-----------------')
     }
 
     conv.contexts.set('plus_one', 1, { pun: pun });
 
     conv.ask(`<speak>${pun}</speak>`)
     conv.ask(new Suggestions('おもろい', 'おもろくない'))
-})
-
-app.intent('Fun', (conv) => {
-    conv.ask(`<speak>${conv.input.raw}</speak>`)
-    conv.ask(`<speak>せやろ</speak>`)
 })
 
 express().use(bodyParser.json(), app).listen(process.env.PORT || 3000)
